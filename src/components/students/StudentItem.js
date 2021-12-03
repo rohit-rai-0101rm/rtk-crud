@@ -11,7 +11,8 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-const StudentItem = (props) => {
+const StudentItem = ({student}) => {
+  const{id,firstName,lastName,phone,email,address}=student
   const handleDelete = () => {
     // delete item code
     console.log("item deleted!");
@@ -21,15 +22,15 @@ const StudentItem = (props) => {
       <Paper>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="subtitle2" gutterBottom>
-            Subroto Biswas
+            {firstName}{lastName}
           </Typography>
-          <IconButton component={Link} to="/students/100">
+          <IconButton component={Link} to={`/students/${id}`}>
             <VisibilityIcon />
           </IconButton>
         </Box>
-        <Typography variant="caption">+91 111 1111 111</Typography>
-        <Typography variant="caption">toofanicoder@example.com</Typography>
-        <Typography variant="caption">Ranchi,Jharkhand</Typography>
+        <Typography variant="caption">{phone}</Typography>
+        <Typography variant="caption">{email}</Typography>
+        <Typography variant="caption">{address}</Typography>
         <Button
           component={Link}
           to="/students/100/edit"

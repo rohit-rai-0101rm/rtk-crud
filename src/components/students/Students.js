@@ -3,7 +3,7 @@ import { Grid, Fab, makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import StudentItem from "./StudentItem";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: "fixed",
@@ -14,11 +14,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Students = () => {
   const classes = useStyles();
+  const students=useSelector((state)=>state.student.students)
+  console.log(students)
   return (
     <>
       <Grid spacing={2} container>
-        {new Array(12).fill("").map((item, index) => (
-          <StudentItem key={index} />
+        {students.map((student, index) => (
+          <StudentItem key={index} student={student} />
         ))}
       </Grid>
       <Fab
