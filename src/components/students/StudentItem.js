@@ -9,13 +9,18 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteStudent } from "../../features/studentSlice";
 
 const StudentItem = ({student}) => {
+  const  dispatch = useDispatch()
   const{id,firstName,lastName,phone,email,address}=student
   const handleDelete = () => {
     // delete item code
+    dispatch(deleteStudent(id))
     console.log("item deleted!");
+  
   };
   return (
     <Grid sm={3} item>
@@ -33,7 +38,7 @@ const StudentItem = ({student}) => {
         <Typography variant="caption">{address}</Typography>
         <Button
           component={Link}
-          to="/students/100/edit"
+          to={`/students/${id}/edit`}
           variant="outlined"
           startIcon={<EditIcon />}
         >

@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Paper, Button } from "@material-ui/core";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
+import {updateStudent, clearStudent, getStudent } from "../../features/studentSlice";
 const EditStudent = () => {
+  const history=useHistory()
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       firstName: "",
@@ -12,18 +15,23 @@ const EditStudent = () => {
       phone: "",
     },
   });
+  const dispatch = useDispatch();
+  const params = useParams();
+  useEffect(() => {
+    dispatch(getStudent(params.id));
+    return () => {
+      dispatch(clearStudent());
+    };
+  }, []);
+  const student = useSelector((state) => state.student.student);
 
   useEffect(() => {
-    reset({
-      firstName: "subroto",
-      lastName: "biswas",
-      email: "subroto@example.com",
-      address: "Ranchi, Jharkhand",
-      phone: "111-2222-111",
-    });
-  }, []);
+    reset(student);
+  }, [student]);
   const onSubmit = (data) => {
     console.log(data);
+    dispatch(updateStudent(data))
+    history.push("/")
   };
   return (
     <div>

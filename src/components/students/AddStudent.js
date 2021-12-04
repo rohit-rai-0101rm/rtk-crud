@@ -1,10 +1,17 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Paper, Button } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { addStudent } from "../../features/studentSlice";
+import { v4 as uuidv4 } from "uuid";
 
+import { useHistory } from "react-router";
 const AddStudent = () => {
+  const history=useHistory()
+  const dispatch=useDispatch()
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
+      id:uuidv4(),
       firstName: "",
       lastName: "",
       email: "",
@@ -13,7 +20,7 @@ const AddStudent = () => {
     },
   });
   const onSubmit = (data) => {
-    console.log(data);
+dispatch(addStudent(data))
     reset({
       firstName: "",
       lastName: "",
@@ -21,6 +28,7 @@ const AddStudent = () => {
       address: "",
       phone: "",
     });
+    history.push("/")
   };
   return (
     <div>

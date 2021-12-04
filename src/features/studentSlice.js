@@ -113,10 +113,31 @@ export const studentSlice=createSlice({
     reducers:{
         getStudent:(state,action)=>{
             console.log(state,action)
-        }
+          state.student=state.students.find(el=>el.id==action.payload)
+       
+          },
+          clearStudent:(state)=>{
+            state.student={
+              firstName:"",
+              lastName: "",
+            email: "",
+            address: "",
+            phone: "",
+
+            }
+          },
+          addStudent:(state,action) => {
+            state.students=[action.payload,...state.students]//apend into students array
+          },
+          updateStudent:(state,action)=>{
+            state.students=state.students.map(el=>el.id==action.payload.id?action.payload:el)
+          },
+          deleteStudent:(state,action)=>{
+            state.students=state.students.filter(el=>el.id!=action.payload)
+          }
             
 
     }
 })
-export const{getStudent}=studentSlice.actions
+export const{updateStudent,getStudent,clearStudent,addStudent,deleteStudent}=studentSlice.actions
 export default studentSlice.reducer
